@@ -1,0 +1,7 @@
+{
+    "type": "esp32-fota-https",
+    "version": 7,
+    "host": "raw.githubusercontent.com",
+    "port": 443,
+    "bin": "/MilleniumSAT/MilleniumSAT/main/Codigo/millenium/src/millenium.bin"
+}
