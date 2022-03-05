@@ -5,7 +5,7 @@
 #include "globaldef.h"
 #include "utils.h"
 #include "wifi.h"
-#include "sensors.h"
+#include "sensores.h"
 #include "task.h"
 class StateMachine
 {
@@ -39,7 +39,7 @@ public:
 
 private:
   WifiMilleniumSAT wifiMilleniumSAT;
-  Sensors sensors;
+  Sensores sensores;
   Utils utils;
   Tasks task;
 };

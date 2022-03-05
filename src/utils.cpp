@@ -5,7 +5,7 @@ secureEsp32FOTA secureEsp32FOTA("esp32-fota-https", V_FIRMWARE);
 WiFiClientSecure client2;
 WifiMilleniumSAT wifiMilleniumSAT;
 Tasks task;
-Sensors sensors;
+Sensores sensores;
 
 uint8_t MILLENIUMSAT_ID;
 

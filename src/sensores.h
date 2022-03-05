@@ -1,5 +1,5 @@
-#ifndef _SENSORS_H
-#define _SENSORS_H
+#ifndef _SENSORES_H
+#define _SENSORES_H
 
 #include "Arduino.h"
 #include "globaldef.h"
@@ -7,7 +7,7 @@
 #include <Wire.h>
 #include <SPI.h>
 
-class Sensors
+class Sensores
 {
 public:
   /**

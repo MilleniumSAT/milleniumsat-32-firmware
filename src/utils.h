@@ -7,7 +7,7 @@
 #include <esp32fota.h>
 #include "wifi.h"
 #include <WiFiClientSecure.h>
-#include "sensors.h"
+#include "sensores.h"
 #include "task.h"
 class Utils
 {

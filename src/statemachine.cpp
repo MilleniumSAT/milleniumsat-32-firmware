@@ -5,7 +5,7 @@ void StateMachine::inicializaMilleniumSAT()
   utils.iniciaComunicacaoSerial();
   utils.enviaMensagem("[UTILS] Iniciando MilleniumSAT.", SERIAL_DEBUG, SEM_TOPICO);
   utils.obtemValoresMemoria();
-  sensors.configuraPortas();
+  sensores.configuraPortas();
   iniciaProcessos();
   task.configuraTasks();
   wifiMilleniumSAT.iniciaConexao();
@@ -25,7 +25,7 @@ void StateMachine::processaEstadoMaquina()
   {
   case STATE_0:
     utils.LED_STATE = OBTENDO_SENSORES;
-    r = sensors.obtemSensores();
+    r = sensores.obtemSensores();
 
     (r == SUCESSO) ? (state_s1 = STATE_1) : (state_s1 = STATE_0);
     break;
