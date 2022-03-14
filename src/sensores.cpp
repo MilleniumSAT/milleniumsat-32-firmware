@@ -1,9 +1,16 @@
 #include "sensores.h"
 #include "PION_System.h"
 #include <ArduinoJson.h>
+#include <TinyGPS++.h>
+#include <SoftwareSerial.h>
+
 StaticJsonDocument<300> pacote;
 static Utils utils;
 static System cubeSat;
+static const int RXPin = 4, TXPin = 3;
+static const uint32_t GPSBaud = 9600;
+TinyGPSPlus gps;
+SoftwareSerial ss(RXPin, TXPin);
 
 String Sensores::obtemSensores()
 {
@@ -25,6 +32,14 @@ String Sensores::obtemSensores()
   pacote["mgx"] = cubeSat.getMagnetometer(0);
   pacote["mgy"] = cubeSat.getMagnetometer(1);
   pacote["mgz"] = cubeSat.getMagnetometer(2);
+  ss.begin(GPSBaud);
+  while (ss.available() > 0){
+    gps.encode(ss.read());
+    if (gps.location.isUpdated()){
+      pacote["lat"] = gps.location.lat();
+      pacote["long"] = gps.location.lng();
+    }
+  }
 
   String conteudoEnvio = "";
   serializeJson(pacote, conteudoEnvio);
