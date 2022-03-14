@@ -38,7 +38,9 @@
 #define SERIAL_DEBUG 1
 #define MQTT_DEBUG 2
 #define SOCKET_DEBUG 3
+#define POST_DEBUG 4
 #define SEM_TOPICO "SEM_TOPICO"
+#define SERVIDOR "https://pkg-receiver-millenium.vercel.app/api/newData"
 #define PORTA_SOCKET 1883
 #define SERVIDOR_SOCKET ".."
 #define TEMPO_DELAY_ENTRE_PACOTES 180

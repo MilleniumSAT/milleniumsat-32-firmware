@@ -34,6 +34,13 @@ public:
   void reconectaConexao(void);
 
   /**
+   * envia um conteudo json via http post
+   * @param String json a ser enviado 
+   * @return uint8_t retorno em sucesso ou falha
+   */
+  uint8_t requisicaoPOST(String json);
+
+  /**
    * Envia informacao via SOCKET
    * @param String conteudo - conteudo a ser enviado 
    * @param int porta - porta a ser enviada

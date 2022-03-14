@@ -39,6 +39,10 @@ void Utils::enviaMensagem(String conteudo, uint8_t whereTo, String topico = SEM_
   case SOCKET_DEBUG:
     wifiMilleniumSAT.enviaSocket(conteudo, PORTA_SOCKET, SERVIDOR_SOCKET, false);
     break;
+
+  case POST_DEBUG:
+    wifiMilleniumSAT.requisicaoPOST(conteudo);
+    break;
   }
 }
 

@@ -1,11 +1,59 @@
 #include "wifi.h"
+#include <HTTPClient.h>
+#include <WiFiManager.h>
 static Utils utils;
 WiFiClient client;
+WiFiManager wifiManager;
 
 void WifiMilleniumSAT::iniciaConexao()
 {
 
   utils.LED_STATE = WIFI;
+  WiFi.setAutoConnect(true);
+  wifiManager.setTimeout(80);
+  wifiManager.setBreakAfterConfig(true);
+  wifiManager.setConfigPortalTimeout(80);
+
+  if (!wifiManager.autoConnect("MilleniumSAT", "12345678"))
+  {
+    Serial.println("[ERRO] Falhou para se conectar... Reiniciando.");
+    utils.reiniciaMilleniumSAT();
+  }
+
+}
+
+uint8_t WifiMilleniumSAT::requisicaoPOST(String json)
+{
+
+  if (WiFi.status() == WL_CONNECTED)
+  {
+    Serial.println("[WIFI] Realizando envio de pacote para o servidor.");
+
+    HTTPClient http;
+
+    String parametros = String(SERVIDOR) + "?json=" + json;
+    http.begin(parametros);
+
+    http.addHeader("Content-Type", "application/json");
+
+    Serial.println(parametros);
+    int httpResponseCode = http.GET();
+
+    if (httpResponseCode == 200)
+    {
+      Serial.println("[WIFI] Envio realizado com sucesso.");
+      http.end();
+      return SUCESSO;
+    }
+
+    Serial.println("[ERRO] Falha ao enviar pacote.");
+    return ERRO;
+  }
+  else
+  {
+    Serial.println("[ERRO] Falhou ao enviar json com conteudo.");
+    return ERRO;
+  }
 }
 
 uint8_t WifiMilleniumSAT::verificaConexao()

@@ -20,9 +20,9 @@ public:
   /**
    * Obtem os dados de todos os sensores
    * @param void sem parametros
-   * @return uint8_t SUCESSO(1)
+   * @return String json com todos os sensores obtidos
    */
-  uint8_t obtemSensores(void);
+  String obtemSensores(void);
 
 private:
   
