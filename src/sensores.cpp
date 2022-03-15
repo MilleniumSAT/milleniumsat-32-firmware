@@ -32,6 +32,8 @@ String Sensores::obtemSensores()
   pacote["mgx"] = cubeSat.getMagnetometer(0);
   pacote["mgy"] = cubeSat.getMagnetometer(1);
   pacote["mgz"] = cubeSat.getMagnetometer(2);
+  pacote["v"] = V_FIRMWARE;
+  
   ss.begin(GPSBaud);
   while (ss.available() > 0){
     gps.encode(ss.read());

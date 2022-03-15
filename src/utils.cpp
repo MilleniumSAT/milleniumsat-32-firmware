@@ -90,7 +90,7 @@ uint8_t Utils::verificaAtualizacoes()
   }
 
   secureEsp32FOTA._host = "raw.githubusercontent.com"; //e.g. example.com
-  secureEsp32FOTA._descriptionOfFirmwareURL = "/MilleniumSAT/MilleniumSAT/main/Codigo/millenium/src/firmware.json";
+  secureEsp32FOTA._descriptionOfFirmwareURL = "/UFG-INF-OBSAT/ota/main/firmware.json";
   secureEsp32FOTA._certificate = test_root_ca;
   secureEsp32FOTA.clientForOta = client2;
 

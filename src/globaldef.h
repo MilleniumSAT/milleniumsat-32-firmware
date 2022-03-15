@@ -8,7 +8,7 @@
 #define TXD2 17
 #define uS_TO_S_FACTOR 1000000
 #define TIME_TO_SLEEP 60
-#define V_FIRMWARE 7
+#define V_FIRMWARE 6
 #define ON_IDLE 1
 #define WORKING 2
 #define WIFI 3

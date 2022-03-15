@@ -21,32 +21,27 @@ void StateMachine::iniciaProcessos()
 
 void StateMachine::processaEstadoMaquina()
 {
-  String conteudo = "";
+  
 
   switch (state_s1)
   {
+
   case STATE_0:
     utils.LED_STATE = OBTENDO_SENSORES;
-    conteudo = sensores.obtemSensores();
+    utils.enviaMensagem(sensores.obtemSensores(), POST_DEBUG, SEM_TOPICO);
 
-    (conteudo) ? (state_s1 = STATE_1) : (state_s1 = STATE_0);
+    r = SUCESSO;
+
+    (r == SUCESSO) ? (state_s1 = STATE_1) : (state_s1 = STATE_0);
     break;
 
   case STATE_1:
-    utils.LED_STATE = ENVIANDO;
-    utils.enviaMensagem(conteudo, POST_DEBUG, SEM_TOPICO);
+    utils.executaVerificacoes();
     r = SUCESSO;
-
     (r == SUCESSO) ? (state_s1 = STATE_2) : (state_s1 = STATE_1);
     break;
 
   case STATE_2:
-    utils.executaVerificacoes();
-    r = SUCESSO;
-    (r == SUCESSO) ? (state_s1 = STATE_3) : (state_s1 = STATE_2);
-    break;
-
-  case STATE_3:
     utils.LED_STATE = HIBERNANDO;
     utils.aguardaProximoEnvio();
     r = SUCESSO;
