@@ -42,7 +42,7 @@ String Sensores::obtemSensores()
       pacote["long"] = gps.location.lng();
     }
   }
-
+  
   String conteudoEnvio = "";
   serializeJson(pacote, conteudoEnvio);
 
