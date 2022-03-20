@@ -55,41 +55,13 @@ void vLowSerial(void *pvParameters)
  */
 void vLowLED(void *pvParameters)
 {
-  const int freq = 5000;
-  const int ledChannel = 0;
-  const int resolution = 8;
-  uint8_t LED_CYCLES = 255;
-
-  esp_task_wdt_init(TEMPO_DELAY_WDT, true);
-  esp_task_wdt_add(NULL);
-  ledcSetup(ledChannel, freq, resolution);
-  ledcAttachPin(ledPino, ledChannel);
-
-  while (true)
-  {
-    esp_task_wdt_reset();
-
-    while (LED_CYCLES--)
-    {
-      ledcWrite(ledChannel, LED_CYCLES);
-      esp_task_wdt_reset();
-      delay(utils.LED_STATE);
-    }
-
-    while (LED_CYCLES < 255)
-    {
-      ledcWrite(ledChannel, LED_CYCLES);
-      esp_task_wdt_reset();
-      delay(utils.LED_STATE);
-    }
-  }
+  
 }
 
 uint8_t Tasks::configuraTasks()
 {
   utils.enviaMensagem("[TASKS] Configurando tasks", SERIAL_DEBUG, SEM_TOPICO);
   xTaskCreate(vLowSerial, "vLowSerial", 2048, NULL, 0, &task_low_serial);
-  xTaskCreate(vLowLED, "vLowLED", 2048, NULL, 0, &task_low_led);
   xTaskCreate(vLowTask, "vLowTasks", 2048, NULL, 5, &task_low);
   utils.enviaMensagem("[TASKS] Tasks configuradas", SERIAL_DEBUG, SEM_TOPICO);
 

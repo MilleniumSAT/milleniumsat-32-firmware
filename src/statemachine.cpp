@@ -15,7 +15,7 @@ void StateMachine::inicializaMilleniumSAT()
 void StateMachine::iniciaProcessos()
 {
   utils.enviaMensagem("[UTILS] Iniciando processos necessarios.", SERIAL_DEBUG, SEM_TOPICO);
-
+  
   utils.enviaMensagem("[UTILS] Processos necessarios iniciados.", SERIAL_DEBUG, SEM_TOPICO);
 }
 
