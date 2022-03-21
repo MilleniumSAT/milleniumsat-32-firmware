@@ -338,7 +338,13 @@ bool secureEsp32FOTA::prepareConnection(String destinationServer)
     clientForOta.setCACert(certificate);
     if (clientForOta.connect(destinationServer.c_str(), 443))
     {
+        Serial.println("Connected to " + destinationServer);
         return true;
+    }
+    else
+    {
+        Serial.println("Connection to " + destinationServer + " failed. Please check your setup");
+        return false;
     }
     return false;
 }

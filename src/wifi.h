@@ -19,6 +19,15 @@ public:
    */
   void iniciaConexao(void);
 
+
+   /**
+    * Verifica se existem atualizacoes pendentes
+    * @param void sem parametro 
+    * @return void sem retorno
+    */
+   uint8_t verificaAtualizacoes(void);
+
+   
   /**
    * Verifica a conexao WiFi
    * @param void sem parametro 

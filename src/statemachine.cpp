@@ -5,9 +5,7 @@ void StateMachine::inicializaMilleniumSAT()
   utils.iniciaComunicacaoSerial();
   utils.enviaMensagem("[UTILS] Iniciando MilleniumSAT.", SERIAL_DEBUG, SEM_TOPICO);
   utils.obtemValoresMemoria();
-  sensores.configuraPortas();
   iniciaProcessos();
-  task.configuraTasks();
   wifiMilleniumSAT.iniciaConexao();
   utils.enviaMensagem("[UTILS] MilleniumSAT iniciado com sucesso.", SERIAL_DEBUG, SEM_TOPICO);
 }
@@ -15,7 +13,8 @@ void StateMachine::inicializaMilleniumSAT()
 void StateMachine::iniciaProcessos()
 {
   utils.enviaMensagem("[UTILS] Iniciando processos necessarios.", SERIAL_DEBUG, SEM_TOPICO);
-  
+  sensores.configuraPortas();
+  task.configuraTasks();
   utils.enviaMensagem("[UTILS] Processos necessarios iniciados.", SERIAL_DEBUG, SEM_TOPICO);
 }
 
@@ -28,7 +27,7 @@ void StateMachine::processaEstadoMaquina()
 
   case STATE_0:
     utils.LED_STATE = OBTENDO_SENSORES;
-    utils.enviaMensagem(sensores.obtemSensores(), POST_DEBUG, SEM_TOPICO);
+    utils.enviaMensagem(sensores.obtemJSON(), POST_DEBUG, SEM_TOPICO);
 
     r = SUCESSO;
 

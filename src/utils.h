@@ -4,7 +4,6 @@
 #include "Arduino.h"
 #include "globaldef.h"
 #include "ArduinoNvs.h"
-#include <esp32fota.h>
 #include "wifi.h"
 #include <WiFiClientSecure.h>
 #include "sensores.h"
@@ -76,13 +75,6 @@ public:
    void executaVerificacoes(void);
 
    /**
-    * Verifica se existem atualizacoes pendentes
-    * @param void sem parametro 
-    * @return void sem retorno
-    */
-   uint8_t verificaAtualizacoes(void);
-
-   /**
     * Aguarda o tempo ocioso de envio
     * @param void sem parametro 
     * @return void sem retorno
@@ -145,7 +137,7 @@ private:
        "TBj0/VLZjmmx6BEP3ojY+x1J96relc8geMJgEtslQIxq/H5COEBkEveegeGTLg==\n"
        "-----END CERTIFICATE-----\n";
 
-   char *test_root_ca =
+   char *test_root_ca2 =
        "-----BEGIN CERTIFICATE-----\n"
        "MIIDxTCCAq2gAwIBAgIQAqxcJmoLQJuPC3nyrkYldzANBgkqhkiG9w0BAQUFADBsMQswCQYDVQQG\n"
        "EwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3d3cuZGlnaWNlcnQuY29tMSsw\n"

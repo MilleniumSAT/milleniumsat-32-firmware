@@ -3,9 +3,12 @@
 
 #include "Arduino.h"
 #include "globaldef.h"
+#include "PION_System.h"
 #include "utils.h"
 #include <Wire.h>
 #include <SPI.h>
+
+static System cubeSat;
 
 class Sensores
 {
@@ -22,7 +25,7 @@ public:
    * @param void sem parametros
    * @return String json com todos os sensores obtidos
    */
-  String obtemSensores(void);
+  String obtemJSON(void);
 
 private:
   
