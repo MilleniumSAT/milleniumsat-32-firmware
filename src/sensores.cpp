@@ -100,7 +100,7 @@ String Sensores::obtemJSON()
   pacote["v"] = V_FIRMWARE;
 
   utils.enviaMensagem("[SENSORS] JSON de envio montado com sucesso.", SERIAL_DEBUG, SEM_TOPICO);
-
+  //TX - 16  | RX - 17
   SerialGPS.begin(9600, SERIAL_8N1, 16, 17);
   long readValue;
 
