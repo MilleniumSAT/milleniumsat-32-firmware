@@ -77,6 +77,93 @@ String Sensores::obtemJSON()
   pitch = filter.getPitch();
   heading = filter.getYaw();
 
+  //TX - 16  | RX - 17
+  SerialGPS.begin(9600, SERIAL_8N1, 16, 17);
+  long readValue;
+
+  gpsState.originLat = (double)readValue / 1000000;
+
+  gpsState.originLon = (double)readValue / 1000000;
+
+  gpsState.originAlt = (double)readValue / 1000000;
+
+  static int p0 = 0;
+  int numeroLeituras = 100;
+  while (1)
+  {
+    gpsState.originLat = gps.location.lat();
+    gpsState.originLon = gps.location.lng();
+    gpsState.originAlt = gps.altitude.meters();
+
+    gpsState.distMax = 0;
+    gpsState.altMax = -999999;
+    gpsState.spdMax = 0;
+    gpsState.altMin = 999999;
+
+    while (SerialGPS.available() > 0)
+    {
+      gps.encode(SerialGPS.read());
+    }
+
+    if (gps.satellites.value() > 4)
+    {
+      gpsState.dist = TinyGPSPlus::distanceBetween(gps.location.lat(), gps.location.lng(), gpsState.originLat, gpsState.originLon);
+
+      if (gpsState.dist > gpsState.distMax && abs(gpsState.prevDist - gpsState.dist) < 50)
+      {
+        gpsState.distMax = gpsState.dist;
+      }
+      gpsState.prevDist = gpsState.dist;
+
+      if (gps.altitude.meters() > gpsState.altMax)
+      {
+        gpsState.altMax = gps.altitude.meters();
+      }
+
+      if (gps.speed.kmph() > gpsState.spdMax)
+      {
+        gpsState.spdMax = gps.speed.kmph();
+      }
+
+      if (gps.altitude.meters() < gpsState.altMin)
+      {
+        gpsState.altMin = gps.altitude.meters();
+      }
+    }
+
+    if (nextSerialTaskTs < millis())
+    {
+      float lat = gps.location.lat();
+      float lon = gps.location.lng();
+      float alt = gps.altitude.meters();
+      float spd = gps.speed.kmph();
+
+      numeroLeituras--;
+      if (!numeroLeituras)
+      {
+        Serial.println("[GPS] Timeout de leitura do GPS!");
+        break;
+      }
+
+      nextSerialTaskTs = millis() + TASK_SERIAL_RATE;
+
+      pacote["lat"] = lat;
+      pacote["lon"] = lon;
+      pacote["alt"] = alt;
+      pacote["spd"] = spd;
+
+      if (lat != 0)
+      {
+        Serial.println("[GPS] Leitura válida do GPS obtida com sucesso.");
+        break;
+      }
+      else
+      {
+        Serial.println("[GPS] Aguardando uma leitura válida do GPS.");
+      }
+    }
+  }
+
   utils.enviaMensagem("[SENSORS] Montando JSON de envio.", SERIAL_DEBUG, SEM_TOPICO);
 
   pacote["bt"] = battery;
@@ -100,88 +187,7 @@ String Sensores::obtemJSON()
   pacote["v"] = V_FIRMWARE;
 
   utils.enviaMensagem("[SENSORS] JSON de envio montado com sucesso.", SERIAL_DEBUG, SEM_TOPICO);
-  //TX - 16  | RX - 17
-  SerialGPS.begin(9600, SERIAL_8N1, 16, 17);
-  long readValue;
 
-  gpsState.originLat = (double)readValue / 1000000;
-
-  gpsState.originLon = (double)readValue / 1000000;
-
-  gpsState.originAlt = (double)readValue / 1000000;
-
-  static int p0 = 0;
-  int numeroLeituras = 5000;
-while (1){
-  // GPS Koordinaten von Modul lesen
-  gpsState.originLat = gps.location.lat();
-  gpsState.originLon = gps.location.lng();
-  gpsState.originAlt = gps.altitude.meters();
-
-  gpsState.distMax = 0;
-  gpsState.altMax = -999999;
-  gpsState.spdMax = 0;
-  gpsState.altMin = 999999;
-
-  while (SerialGPS.available() > 0)
-  {
-    gps.encode(SerialGPS.read());
-  }
-
-  if (gps.satellites.value() > 4)
-  {
-    gpsState.dist = TinyGPSPlus::distanceBetween(gps.location.lat(), gps.location.lng(), gpsState.originLat, gpsState.originLon);
-
-    if (gpsState.dist > gpsState.distMax && abs(gpsState.prevDist - gpsState.dist) < 50)
-    {
-      gpsState.distMax = gpsState.dist;
-    }
-    gpsState.prevDist = gpsState.dist;
-
-    if (gps.altitude.meters() > gpsState.altMax)
-    {
-      gpsState.altMax = gps.altitude.meters();
-    }
-
-    if (gps.speed.kmph() > gpsState.spdMax)
-    {
-      gpsState.spdMax = gps.speed.kmph();
-    }
-
-    if (gps.altitude.meters() < gpsState.altMin)
-    {
-      gpsState.altMin = gps.altitude.meters();
-    }
-  }
-
-  if (nextSerialTaskTs < millis())
-  {
-    Serial.print("LAT=");
-    float lat = gps.location.lat();
-    float lon = gps.location.lng();
-    float alt = gps.altitude.meters();
-    float spd = gps.speed.kmph();
-
-    Serial.print("LAT=");
-    Serial.print(lat);
-    Serial.print("LON=");
-    Serial.print(lon);
-    Serial.print("ALT=");
-    Serial.print(alt);
-    Serial.print("SPD=");
-    Serial.print(spd);
-
-    nextSerialTaskTs = millis() + TASK_SERIAL_RATE;
-
-    pacote["lat"] = lat;
-    pacote["lon"] = lon;
-    pacote["alt"] = alt;
-
-    if (lat != 0){
-      break;
-    }
-  }
-}
   String conteudoEnvio = "";
   serializeJson(pacote, conteudoEnvio);
   Serial.println("[UTILS] Pacote: " + conteudoEnvio);
