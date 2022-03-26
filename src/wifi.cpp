@@ -68,7 +68,7 @@ void WifiMilleniumSAT::iniciaConexao()
 uint8_t WifiMilleniumSAT::verificaAtualizacoes()
 {
   WiFiClientSecure client2;
-  esp32FOTA esp32FOTA("esp32-fota-http", V_FIRMWARE, false, true);
+  esp32FOTA esp32FOTA("esp32-fota-http", 8, false, true);
 
   uint8_t TIMETOUT_OTA = 180;
   utils.enviaMensagem("[UTILS] Verificando atualizações.", SERIAL_DEBUG, SEM_TOPICO);
@@ -106,7 +106,7 @@ uint8_t WifiMilleniumSAT::requisicaoPOST(String json)
 
     HTTPClient http;
 
-    String parametros = String(SERVIDOR) + "?json=" + json;
+    String parametros = String(SERVIDOR) + "?pacote=" + json;
     http.begin(parametros);
 
     http.addHeader("Content-Type", "application/json");

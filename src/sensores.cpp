@@ -5,7 +5,7 @@
 #include <HardwareSerial.h>
 
 StaticJsonDocument<500> pacote;
-const float sensorRate = 104.00;
+const float sensorRate = 100;
 static Utils utils;
 static const uint32_t GPSBaud = 9600;
 Madgwick filter;
@@ -89,6 +89,10 @@ String Sensores::obtemJSON()
 
   static int p0 = 0;
   int numeroLeituras = 100;
+  float lat = 0;
+  float lon = 0;
+  float alt = 0;
+  float spd = 0;
   while (1)
   {
     gpsState.originLat = gps.location.lat();
@@ -133,10 +137,10 @@ String Sensores::obtemJSON()
 
     if (nextSerialTaskTs < millis())
     {
-      float lat = gps.location.lat();
-      float lon = gps.location.lng();
-      float alt = gps.altitude.meters();
-      float spd = gps.speed.kmph();
+      lat = gps.location.lat();
+      lon = gps.location.lng();
+      alt = gps.altitude.meters();
+      spd = gps.speed.kmph();
 
       numeroLeituras--;
       if (!numeroLeituras)
@@ -147,11 +151,6 @@ String Sensores::obtemJSON()
 
       nextSerialTaskTs = millis() + TASK_SERIAL_RATE;
 
-      pacote["lat"] = lat;
-      pacote["lon"] = lon;
-      pacote["alt"] = alt;
-      pacote["spd"] = spd;
-
       if (lat != 0)
       {
         Serial.println("[GPS] Leitura válida do GPS obtida com sucesso.");
@@ -159,10 +158,15 @@ String Sensores::obtemJSON()
       }
       else
       {
-        Serial.println("[GPS] Aguardando uma leitura válida do GPS.");
+        Serial.println("[GPS] Aguardando uma leitura válida do GPS. (" + String(numeroLeituras) + "/100)");
       }
     }
   }
+
+  pacote["lat"] = lat;
+  pacote["lon"] = lon;
+  pacote["alt"] = alt;
+  pacote["spd"] = spd;
 
   utils.enviaMensagem("[SENSORS] Montando JSON de envio.", SERIAL_DEBUG, SEM_TOPICO);
 
