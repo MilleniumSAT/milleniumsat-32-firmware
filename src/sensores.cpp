@@ -163,32 +163,28 @@ String Sensores::obtemJSON()
     }
   }
 
-  pacote["lat"] = lat;
-  pacote["lon"] = lon;
-  pacote["alt"] = alt;
-  pacote["spd"] = spd;
-
   utils.enviaMensagem("[SENSORS] Montando JSON de envio.", SERIAL_DEBUG, SEM_TOPICO);
 
-  pacote["bt"] = battery;
-  pacote["tmp"] = tmp;
-  pacote["umd"] = umd;
-  pacote["press"] = press;
-  pacote["co2"] = co2;
-  pacote["lum"] = lum;
-  pacote["accx"] = xAcc;
-  pacote["accy"] = yAcc;
-  pacote["accz"] = zAcc;
-  pacote["grx"] = xGyro;
-  pacote["gry"] = yGyro;
-  pacote["grz"] = zGyro;
-  pacote["mgx"] = mgx;
-  pacote["mgy"] = mgy;
-  pacote["mgz"] = mgz;
-  pacote["roll"] = roll;
-  pacote["pitch"] = pitch;
-  pacote["heading"] = heading;
-  pacote["v"] = V_FIRMWARE;
+  pacote["equipe"] = EQUIPE;
+  pacote["bateria"] = battery;
+  pacote["temperatura"] = tmp;
+  pacote["pressao"] = press;
+  pacote["giroscopio"][0] = xGyro;
+  pacote["giroscopio"][1] = yGyro;
+  pacote["giroscopio"][2] = zGyro;
+  pacote["acelerometro"][0] = xAcc;
+  pacote["acelerometro"][1] = yAcc;
+  pacote["acelerometro"][2] = zAcc;
+  pacote["payload]"][0]["sequencial"] = 0;
+  pacote["payload]"][0]["georeferencia"][0] = lat;
+  pacote["payload]"][0]["georeferencia"][1] = lon;
+  pacote["payload]"][0]["georeferencia"][2] = alt;
+  pacote["payload]"][0]["magnetometro"][0] = mgx;
+  pacote["payload]"][0]["magnetometro"][1] = mgy;
+  pacote["payload]"][0]["magnetometro"][2] = mgz;
+  pacote["payload]"][0]["orientacao"][0] = pitch;
+  pacote["payload]"][0]["orientacao"][1] = roll;
+  pacote["payload]"][0]["orientacao"][2] = heading;
 
   utils.enviaMensagem("[SENSORS] JSON de envio montado com sucesso.", SERIAL_DEBUG, SEM_TOPICO);
 
