@@ -1,5 +1,9 @@
 #include "statemachine.h"
 
+String pacoteParaEnvio = "";
+unsigned long lastConnectionTime = 0;         //Tempo da última conexão.
+const unsigned long postingInterval = 240000L; //Tempo de postagem, 4 mintuos.
+
 void StateMachine::inicializaMilleniumSAT()
 {
   utils.iniciaComunicacaoSerial();
@@ -20,27 +24,46 @@ void StateMachine::iniciaProcessos()
 
 void StateMachine::processaEstadoMaquina()
 {
-  
 
   switch (state_s1)
   {
 
   case STATE_0:
     utils.LED_STATE = OBTENDO_SENSORES;
-    utils.enviaMensagem(sensores.obtemJSON(), POST_DEBUG, SEM_TOPICO);
+    pacoteParaEnvio = sensores.obtemJSON();
 
-    r = SUCESSO;
+    if (millis() - lastConnectionTime > postingInterval)
+    {
+      utils.enviaMensagem("[UTILS] Timer atingiu seu tempo limite. Iniciando envio do pacote para o servidor.", SERIAL_DEBUG, SEM_TOPICO);
+      lastConnectionTime = millis();
+      r = SUCESSO;
+    }
+    else
+    {
+      utils.enviaMensagem("[UTILS] Timer ainda nao atingiu seu tempo limite. Aguardando 10 segundos.", SERIAL_DEBUG, SEM_TOPICO);
+      r = AGUARDA;
+      delay(10000);
+    }
 
     (r == SUCESSO) ? (state_s1 = STATE_1) : (state_s1 = STATE_0);
     break;
 
   case STATE_1:
-    utils.executaVerificacoes();
+    utils.LED_STATE = OBTENDO_SENSORES;
+    utils.enviaMensagem(pacoteParaEnvio, POST_DEBUG, SEM_TOPICO);
+
     r = SUCESSO;
-    (r == SUCESSO) ? (state_s1 = STATE_2) : (state_s1 = STATE_1);
+
+    (r == SUCESSO) ? (state_s1 = STATE_2) : (state_s1 = STATE_0);
     break;
 
   case STATE_2:
+    utils.executaVerificacoes();
+    r = SUCESSO;
+    (r == SUCESSO) ? (state_s1 = STATE_0) : (state_s1 = STATE_0);
+    break;
+
+  case STATE_3:
     utils.LED_STATE = HIBERNANDO;
     utils.aguardaProximoEnvio();
     r = SUCESSO;

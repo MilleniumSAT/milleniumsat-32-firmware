@@ -15,6 +15,7 @@ class Sensors{
     static float accel[3];
     static float gyro[3];
     static float mag[3];
+    static float gps[3];
 
 };
 

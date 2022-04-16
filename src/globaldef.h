@@ -28,6 +28,7 @@
 
 /*STATUS DE ERRO*/
 #define SUCESSO  1
+#define AGUARDA  3
 #define ERRO  0
 #define FLAG_ATIVADA 1
 #define FLAG_DESATIVADA 0

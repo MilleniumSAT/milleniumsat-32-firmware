@@ -385,6 +385,14 @@ float System::getAccelerometer(uint8_t axis){
     return 0;
 }
 
+// Get GPS Values from sensors
+float System::getGps(uint8_t axis){
+  if(axis < 3)
+    return sensors.gps[axis];
+  else 
+    return 0;
+}
+
 // Get Gyroscope  from sensors
 float System::getGyroscope(uint8_t axis){
   if(axis < 3)

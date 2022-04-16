@@ -251,7 +251,7 @@ boolean WiFiManager::autoConnect() {
  * @param  {[type]} char const         *apPassword [description]
  * @return {[type]}      [description]
  */
-boolean WiFiManager::autoConnect(char const *apName, char const *apPassword) {
+boolean WiFiManager::autoConnect(char const *apName, char const *apPassword, uint8_t CONFIG_WIFI) {
   DEBUG_WM(F("AutoConnect"));
   if(getWiFiIsSaved()){
 
@@ -321,8 +321,12 @@ boolean WiFiManager::autoConnect(char const *apName, char const *apPassword) {
   else DEBUG_WM(F("No Credentials are Saved, skipping connect"));
 
   // not connected start configportal
-  bool res = startConfigPortal(apName, apPassword);
-  return res;
+
+  if (CONFIG_WIFI == '1'){
+    bool res = startConfigPortal(apName, apPassword);
+  } else {
+    ESP.restart();
+  }
 }
 
 bool WiFiManager::setupHostname(bool restart){

@@ -17,6 +17,7 @@ class System{
     static float getCO2Level();
     static float getLuminosity();
     static float getAccelerometer(uint8_t);
+    static float getGps(uint8_t);
     static float getGyroscope(uint8_t);
     static float getMagnetometer(uint8_t);
     static void setRGB(uint8_t);

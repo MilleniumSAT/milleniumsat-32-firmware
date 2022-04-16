@@ -38,6 +38,9 @@ void vLowSerial(void *pvParameters)
       if (task.input.equals("setid"))
         utils.salvaConteudoPersonalizadoNVS("id", TIPO_STRING);
 
+      if (task.input.equals("wifi"))
+        utils.salvaConteudoPersonalizadoNVS("wifi", TIPO_STRING);
+
       if (task.input.equals("i2cdetect"))
         i2cdetect();
 

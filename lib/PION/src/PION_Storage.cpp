@@ -208,7 +208,7 @@ __attribute__((weak)) void createFileFirstLine(fs::FS &fs, const char * path){
         Serial.println("Falha ao abrir para escrita");
         return;
     }
-    const char * message = "tempo(ms),temperatura(C),umidade(%),pressao(Pa),co2(ppm),luminosidade(%),acelX(m/s2),accelY,acelZ,giroX(graus/s),giroY,giroZ,magX(uT),magY,magZ,bateria(%)";
+    const char * message = "tempo(ms),temperatura(C),umidade(%),pressao(Pa),co2(ppm),luminosidade(%),acelX(m/s2),accelY,acelZ,giroX(graus/s),giroY,giroZ,magX(uT),magY,magZ,gpsX,gpsY,gpsZ,bateria(%)";
     if(file.println(message)){
         Serial.println("Escrita Começou");
     } else {
@@ -252,6 +252,12 @@ __attribute__((weak)) void appendFile(fs::FS &fs, const char * path, TickType_t 
     file.print(Sensors::mag[1]);
     file.write(',');
     file.print(Sensors::mag[2]);
+    file.write(',');
+    file.print(Sensors::gps[0]);
+    file.write(',');
+    file.print(Sensors::gps[1]);
+    file.write(',');
+    file.print(Sensors::gps[2]);
     file.write(',');
     file.println(System::battery);
     file.close();

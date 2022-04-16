@@ -58,7 +58,7 @@ void WifiMilleniumSAT::iniciaConexao()
   wifiManager.setBreakAfterConfig(true);
   wifiManager.setConfigPortalTimeout(80);
 
-  if (!wifiManager.autoConnect("MilleniumSAT", "12345678"))
+  if (!wifiManager.autoConnect("MilleniumSAT", "12345678", CONFIG_WIFI))
   {
     Serial.println("[ERRO] Falhou para se conectar... Reiniciando.");
     utils.reiniciaMilleniumSAT();

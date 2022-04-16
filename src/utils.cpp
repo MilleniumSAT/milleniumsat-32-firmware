@@ -6,6 +6,7 @@ Tasks task;
 Sensores sensores;
 
 uint8_t MILLENIUMSAT_ID;
+uint8_t CONFIG_WIFI;
 
 
 
@@ -18,6 +19,7 @@ uint8_t Utils::obtemValoresMemoria()
 {
   NVS.begin();
   MILLENIUMSAT_ID = NVS.getString("id").toInt();
+  CONFIG_WIFI = NVS.getString("wifi").toInt();
 
   return SUCESSO;
 }
