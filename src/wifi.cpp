@@ -105,26 +105,27 @@ uint8_t WifiMilleniumSAT::requisicaoPOST(String json)
     Serial.println("[WIFI] Realizando envio de pacote para o servidor.");
 
     HTTPClient http;
+    http.begin(String(SERVIDOR + json));
 
-    String parametros = String(SERVIDOR) + "?pacote=" + json;
-    http.begin(parametros);
+    int httpResponseCode = http.POST(json);
 
-    http.addHeader("Content-Type", "application/json");
-    int httpResponseCode = http.GET();
-
-    if (httpResponseCode == 200)
+    if (httpResponseCode > 0)
     {
-      Serial.println("[WIFI] Envio realizado com sucesso.");
-      http.end();
-      return SUCESSO;
+      Serial.printf("[WIFI] Status da requisicao: %d\n", httpResponseCode);
+      Serial.printf("[WIFI] Response: %s\n", http.getString().c_str());
+    }
+    else
+    {
+      Serial.printf("[WIFI] Falha na requisicao: %s\n", http.errorToString(httpResponseCode).c_str());
     }
 
-    Serial.println("[ERRO] Falha ao enviar pacote.");
-    return ERRO;
+    http.end();
+    Serial.println("[ERRO] Tentativa de envio finalizada.");
+    return SUCESSO;
   }
   else
   {
-    Serial.println("[ERRO] Falhou ao enviar json com conteudo.");
+    Serial.println("[ERRO] Falhou ao enviar json com conteudo. Provavelmente o satelite nao esta com conexao ativa.");
     return ERRO;
   }
 }

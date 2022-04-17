@@ -42,7 +42,8 @@
 #define SOCKET_DEBUG 3
 #define POST_DEBUG 4
 #define SEM_TOPICO "SEM_TOPICO"
-#define SERVIDOR "https://pkg-receiver-millenium.vercel.app/api/newData"
+#define SERVIDOR "https://pkg-receiver-millenium.vercel.app/api/newData?pacote="
+#define SERVIDOR_HOMOLOGACAO "http://ptsv2.com/t/ijfka-1650200607/post"
 #define PORTA_SOCKET 1883
 #define SERVIDOR_SOCKET ".."
 #define TEMPO_DELAY_ENTRE_PACOTES 180
