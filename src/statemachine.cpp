@@ -40,9 +40,9 @@ void StateMachine::processaEstadoMaquina()
     }
     else
     {
-      utils.enviaMensagem("[UTILS] Timer ainda nao atingiu seu tempo limite. Aguardando 10 segundos.", SERIAL_DEBUG, SEM_TOPICO);
+      utils.enviaMensagem("[UTILS] Timer ainda nao atingiu seu tempo limite. Aguardando 30 segundos.", SERIAL_DEBUG, SEM_TOPICO);
       r = AGUARDA;
-      delay(10000);
+      delay(30000);
     }
 
     (r == SUCESSO) ? (state_s1 = STATE_1) : (state_s1 = STATE_0);
