@@ -27,6 +27,13 @@ public:
    */
   String obtemJSON(void);
 
+ /**
+   * Retorna o tmstmp
+   * @param void sem parametros
+   * @return String json com todos os sensores obtidos
+   */
+  unsigned long getTime(void);
+
 
 private:
   

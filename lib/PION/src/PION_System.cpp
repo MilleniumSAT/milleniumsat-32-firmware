@@ -354,7 +354,7 @@ uint8_t System::getBattery(){
 
 // Get Temperature from sensors
 float System::getTemperature(){
-  return sensors.temperature;
+  return sensors.BMPtemp;
 }
 
 // Get Humidity from sensors

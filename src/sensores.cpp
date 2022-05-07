@@ -1,12 +1,14 @@
 #include "sensores.h"
 #include <ArduinoJson.h>
 #include "MadgwickAHRS.h"
+#include "time.h"
 
 StaticJsonDocument<500> pacote;
 const float sensorRate = 100;
 uint32_t sequencial = 0;
 static Utils utils;
 Madgwick filter;
+const char* ntpServer = "pool.ntp.org";
 
 String Sensores::obtemJSON()
 {
@@ -69,16 +71,16 @@ String Sensores::obtemJSON()
   pacote["acelerometro"][0] = xAcc;
   pacote["acelerometro"][1] = yAcc;
   pacote["acelerometro"][2] = zAcc;
-  pacote["payload]"][0]["sequencial"] = sequencial;
-  pacote["payload]"][0]["georeferencia"][0] = lat;
-  pacote["payload]"][0]["georeferencia"][1] = lon;
-  pacote["payload]"][0]["georeferencia"][2] = alt;
-  pacote["payload]"][0]["magnetometro"][0] = mgx;
-  pacote["payload]"][0]["magnetometro"][1] = mgy;
-  pacote["payload]"][0]["magnetometro"][2] = mgz;
-  pacote["payload]"][0]["orientacao"][0] = pitch;
-  pacote["payload]"][0]["orientacao"][1] = roll;
-  pacote["payload]"][0]["orientacao"][2] = heading;
+  pacote["payload"][0]["tmstmp"] = getTime();
+  pacote["payload"][0]["georeferencia"][0] = lat;
+  pacote["payload"][0]["georeferencia"][1] = lon;
+  pacote["payload"][0]["georeferencia"][2] = alt;
+  pacote["payload"][0]["magnetometro"][0] = mgx;
+  pacote["payload"][0]["magnetometro"][1] = mgy;
+  pacote["payload"][0]["magnetometro"][2] = mgz;
+  pacote["payload"][0]["orientacao"][0] = pitch;
+  pacote["payload"][0]["orientacao"][1] = roll;
+  pacote["payload"][0]["orientacao"][2] = heading;
 
   sequencial++;
 
@@ -93,6 +95,17 @@ String Sensores::obtemJSON()
   Serial.println("[UTILS] Pacote: " + conteudoEnvio);
 
   return conteudoEnvio;
+}
+
+unsigned long Sensores::getTime() {
+  time_t now;
+  struct tm timeinfo;
+  if (!getLocalTime(&timeinfo)) {
+    //Serial.println("Failed to obtain time");
+    return(0);
+  }
+  time(&now);
+  return now;
 }
 
 uint8_t Sensores::configuraPortas()
