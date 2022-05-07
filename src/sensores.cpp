@@ -61,6 +61,8 @@ String Sensores::obtemJSON()
 
   utils.enviaMensagem("[SENSORS] Montando JSON de envio.", SERIAL_DEBUG, SEM_TOPICO);
 
+  configTime(0, 0, ntpServer);
+
   pacote["equipe"] = MILLENIUMSAT_ID;
   pacote["bateria"] = battery;
   pacote["temperatura"] = tmp;
@@ -101,7 +103,7 @@ unsigned long Sensores::getTime() {
   time_t now;
   struct tm timeinfo;
   if (!getLocalTime(&timeinfo)) {
-    //Serial.println("Failed to obtain time");
+    Serial.println("Failed to obtain time");
     return(0);
   }
   time(&now);
