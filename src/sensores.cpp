@@ -73,16 +73,16 @@ String Sensores::obtemJSON()
   pacote["acelerometro"][0] = xAcc;
   pacote["acelerometro"][1] = yAcc;
   pacote["acelerometro"][2] = zAcc;
-  pacote["payload"][0]["tmstmp"] = getTime();
-  pacote["payload"][0]["georeferencia"][0] = lat;
-  pacote["payload"][0]["georeferencia"][1] = lon;
-  pacote["payload"][0]["georeferencia"][2] = alt;
-  pacote["payload"][0]["magnetometro"][0] = mgx;
-  pacote["payload"][0]["magnetometro"][1] = mgy;
-  pacote["payload"][0]["magnetometro"][2] = mgz;
-  pacote["payload"][0]["orientacao"][0] = pitch;
-  pacote["payload"][0]["orientacao"][1] = roll;
-  pacote["payload"][0]["orientacao"][2] = heading;
+  pacote["payload"]["tmstmp"] = getTime();
+  pacote["payload"]["georeferencia"][0] = lat;
+  pacote["payload"]["georeferencia"][1] = lon;
+  pacote["payload"]["georeferencia"][2] = alt;
+  pacote["payload"]["magnetometro"][0] = mgx;
+  pacote["payload"]["magnetometro"][1] = mgy;
+  pacote["payload"]["magnetometro"][2] = mgz;
+  pacote["payload"]["orientacao"][0] = pitch;
+  pacote["payload"]["orientacao"][1] = roll;
+  pacote["payload"]["orientacao"][2] = heading;
 
   sequencial++;
 
