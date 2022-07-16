@@ -89,7 +89,7 @@ public:
    void salvaConteudoPersonalizadoNVS(String chave, String tipo);
 
    /**
-    * Mostra o menu do airpure na serial
+    * Mostra o menu na serial
     * @param void sem parametro 
     * @return void sem retorno
     */
