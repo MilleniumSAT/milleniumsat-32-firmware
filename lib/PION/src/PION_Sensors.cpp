@@ -199,7 +199,7 @@ InitStatus_t Sensors::init()
 
 void GPSTask(void *pvParameters)
 {
-
+  Serial.println("[GPS]: Task inicializada com sucesso");
   (void)pvParameters;
   SerialGPS.begin(9600, SERIAL_8N1, 16, 17);
 
@@ -276,6 +276,7 @@ void GPSTask(void *pvParameters)
 
 void BaroTask(void *pvParameters)
 {
+   Serial.println("[Baro]: Task inicializada com sucesso");
 
   (void)pvParameters;
 
@@ -309,6 +310,7 @@ void BaroTask(void *pvParameters)
 
 void TempHumTask(void *pvParameters)
 {
+   Serial.println("[TempHum]: Task inicializada com sucesso");
   (void)pvParameters;
   vTaskDelay(2000);
 
@@ -341,6 +343,7 @@ void TempHumTask(void *pvParameters)
 
 void CO2Task(void *pvParameters)
 {
+   Serial.println("[CO2]: Task inicializada com sucesso");
   (void)pvParameters;
   vTaskDelay(2000);
 
@@ -368,6 +371,7 @@ void CO2Task(void *pvParameters)
 
 void AnalogTask(void *pvParameters)
 {
+   Serial.println("[Analog]: Task inicializada com sucesso");
   (void)pvParameters;
   pinMode(BAT_SENSOR, INPUT);
   pinMode(LIGHT_SENSOR, INPUT);
@@ -381,6 +385,7 @@ void AnalogTask(void *pvParameters)
 
 void IMUTask(void *pvParameters)
 {
+   Serial.println("[IMU]: Task inicializada com sucesso");
   (void)pvParameters;
   vTaskDelay(2000);
 

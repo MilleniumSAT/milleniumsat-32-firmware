@@ -7,7 +7,6 @@ StaticJsonDocument<500> pacote;
 const float sensorRate = 100;
 uint32_t sequencial = 0;
 static Utils utils;
-Madgwick filter;
 const char* ntpServer = "pool.ntp.org";
 
 String Sensores::obtemJSON()
@@ -53,11 +52,6 @@ String Sensores::obtemJSON()
 
   delay(200);
   utils.enviaMensagem("[SENSORS] Sensores lidos com sucesso.", SERIAL_DEBUG, SEM_TOPICO);
-
-  filter.updateIMU(xGyro, yGyro, zGyro, xAcc, yAcc, zAcc);
-  roll = filter.getRoll();
-  pitch = filter.getPitch();
-  heading = filter.getYaw();
 
   utils.enviaMensagem("[SENSORS] Montando JSON de envio.", SERIAL_DEBUG, SEM_TOPICO);
 
@@ -118,6 +112,5 @@ uint8_t Sensores::configuraPortas()
 
   delay(2000);
   utils.enviaMensagem("[SENSORS] Sensores configurados com sucesso.", SERIAL_DEBUG, SEM_TOPICO);
-  filter.begin(sensorRate);
   return SUCESSO;
 }

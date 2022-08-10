@@ -60,8 +60,7 @@ void WifiMilleniumSAT::iniciaConexao()
 
   if (!wifiManager.autoConnect("MilleniumSAT", "12345678", CONFIG_WIFI))
   {
-    Serial.println("[ERRO] Falhou para se conectar... Reiniciando.");
-    utils.reiniciaMilleniumSAT();
+    Serial.println("[ERRO] Falhou para se conectar... Sera realizada uma nova tentativa no proximo envio.");
   }
 }
 
@@ -94,11 +93,20 @@ uint8_t WifiMilleniumSAT::verificaAtualizacoes()
     utils.enviaMensagem("[UTILS] Nao ha atualização disponivel.", SERIAL_DEBUG, SEM_TOPICO);
   }
 
+  utils.enviaMensagem("[UTILS] Desativando conexao com o WiFi.", SERIAL_DEBUG, SEM_TOPICO);
+  wifiManager.disconnect();
+
   return SUCESSO;
 }
 
 uint8_t WifiMilleniumSAT::requisicaoPOST(String json)
 {
+  if (WiFi.status() != WL_CONNECTED)
+  {
+    utils.enviaMensagem("[UTILS] Satelite sem conexao com a internet. Sera realizada uma tentativa de conexao.", SERIAL_DEBUG, SEM_TOPICO);
+    wifiManager.autoConnect();
+  }
+  
 
   if (WiFi.status() == WL_CONNECTED)
   {
@@ -125,7 +133,7 @@ uint8_t WifiMilleniumSAT::requisicaoPOST(String json)
   }
   else
   {
-    Serial.println("[ERRO] Falhou ao enviar json com conteudo. Provavelmente o satelite nao esta com conexao ativa.");
+    Serial.println("[ERRO] Falhou ao enviar json com conteudo. Provavelmente o satelite nao conseguiu se conectar.");
     return ERRO;
   }
 }

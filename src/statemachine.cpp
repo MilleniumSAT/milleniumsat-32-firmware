@@ -1,7 +1,7 @@
 #include "statemachine.h"
 
 String pacoteParaEnvio = "";
-unsigned long lastConnectionTime = 0;         //Tempo da última conexão.
+unsigned long lastConnectionTime = 240000L;         //Tempo da última conexão.
 const unsigned long postingInterval = 240000L; //Tempo de postagem, 4 mintuos.
 
 void StateMachine::inicializaMilleniumSAT()
