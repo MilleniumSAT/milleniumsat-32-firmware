@@ -17,7 +17,7 @@ public:
   uint8_t r;
 
   /**
-   * Inicializa o airpure chamando todas as funções necessárias
+   * Inicializa chamando todas as funções necessárias
    * @param void sem parametros
    * @return void sem retorno
    */
