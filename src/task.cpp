@@ -1,6 +1,5 @@
 #include "task.h"
 
-WifiMilleniumSAT wifiMilleniumSAT;
 static Utils utils;
 static Tasks task;
 TaskHandle_t task_low_serial;

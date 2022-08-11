@@ -267,6 +267,7 @@ void GPSTask(void *pvParameters)
       Sensors::gps[0] = gps.location.lat();
       Sensors::gps[1] = gps.location.lng();
       Sensors::gps[2] = gps.altitude.meters();
+      Serial.println("[GPS]: " + String(gps.location.lat()) + " " + String(gps.location.lng()) + " " + String(gps.altitude.meters()));
       nextSerialTaskTs = millis() + TASK_SERIAL_RATE;
     }
 
