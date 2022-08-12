@@ -52,6 +52,8 @@ char *ota_cert =
 
 void WifiMilleniumSAT::iniciaConexao()
 {
+  WiFi.disconnect(false);  // Reconnect the network
+  WiFi.mode(WIFI_STA);    // Switch WiFi off
   utils.LED_STATE = WIFI;
   WiFi.setAutoConnect(true);
   wifiManager.setTimeout(80);
@@ -94,7 +96,8 @@ uint8_t WifiMilleniumSAT::verificaAtualizacoes()
   }
 
   utils.enviaMensagem("[UTILS] Desativando conexao com o WiFi.", SERIAL_DEBUG, SEM_TOPICO);
-  wifiManager.disconnect();
+  WiFi.disconnect(true);  // Disconnect from the network
+  WiFi.mode(WIFI_OFF);    // Switch WiFi off
 
   return SUCESSO;
 }

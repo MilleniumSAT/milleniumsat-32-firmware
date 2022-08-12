@@ -225,7 +225,7 @@ __attribute__((weak)) void appendFile(fs::FS &fs, const char * path, TickType_t 
     }
     file.print(time);
     file.write(',');
-    file.print(Sensors::temperature);
+    file.print(Sensors::BMPtemp);
     file.write(',');
     file.print(Sensors::humidity);
     file.write(',');

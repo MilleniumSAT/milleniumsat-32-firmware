@@ -19,6 +19,7 @@ void StateMachine::iniciaProcessos()
   utils.enviaMensagem("[UTILS] Iniciando processos necessarios.", SERIAL_DEBUG, SEM_TOPICO);
   sensores.configuraPortas();
   task.configuraTasks();
+  setCpuFrequencyMhz(80);
   utils.enviaMensagem("[UTILS] Processos necessarios iniciados.", SERIAL_DEBUG, SEM_TOPICO);
 }
 
