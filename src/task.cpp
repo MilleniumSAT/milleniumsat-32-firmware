@@ -13,9 +13,15 @@ TaskHandle_t task_low;
  */
 void vLowTask(void *pvParameters)
 {
+  System cubeSat;
+
   while (true)
   {
-    
+    cubeSat.setRGB(BLUE);
+    delay(1000);
+    cubeSat.setRGB(RED);
+    delay(1000);
+    cubeSat.setRGB(GREEN);
     vTaskDelay(pdMS_TO_TICKS(1000));
   }
 }

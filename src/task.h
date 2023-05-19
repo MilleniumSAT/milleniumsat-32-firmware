@@ -7,6 +7,7 @@
 #include <i2cdetect.h>
 #include <esp_task_wdt.h>
 #include "wifi.h"
+#include "PION_System.h"
 
 class Tasks
 {

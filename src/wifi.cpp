@@ -69,7 +69,7 @@ void WifiMilleniumSAT::iniciaConexao()
 uint8_t WifiMilleniumSAT::verificaAtualizacoes()
 {
   WiFiClientSecure client2;
-  esp32FOTA esp32FOTA("esp32-fota-http", 8, false, true);
+  esp32FOTA esp32FOTA("esp32-fota-http", 9, false, true);
 
   uint8_t TIMETOUT_OTA = 180;
   utils.enviaMensagem("[UTILS] Verificando atualizações.", SERIAL_DEBUG, SEM_TOPICO);
